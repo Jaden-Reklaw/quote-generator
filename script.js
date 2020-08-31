@@ -39,5 +39,18 @@ async function getQuote() {
     }
 }
 
+//Twitter function for sending a quote to twitter
+function tweetQuote() {
+    const quote = quoteText.innerText;
+    const authorText = author.innerText;
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${quote} - ${authorText}`;
+    //Open up a new window
+    window.open(twitterUrl, '_blank');
+}
+
+//Add Event Listeners
+newQuoteBtn.addEventListener('click', getQuote);
+twitterBtn.addEventListener('click', tweetQuote);
+
 //On Load function call
 getQuote();
