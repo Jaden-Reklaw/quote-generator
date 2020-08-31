@@ -1,1 +1,1 @@
-# JS_Template
+# A Random Quote Generator
