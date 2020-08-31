@@ -1,3 +1,12 @@
+//Select IDs from the DOM
+const quoteContainer = document.getElementById('quote-container');
+//Text or HTML content
+const quoteText = document.getElementById('quote');
+const author = document.getElementById('author');
+//Buttons
+const twitterBtn = document.getElementById('twitter');
+const newQuoteBtn = document.getElementById('new-quote');
+
 //Get Quote From API
 async function getQuote() {
     //How to get rid of cors errors
@@ -5,9 +14,25 @@ async function getQuote() {
     const apiUrl = 'http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json';
 
     try{
+        //Uses fetch api to cors proxy server and api for random quote
         const reponse = await fetch(proxyUrl + apiUrl);
-        const data = reponse.json();
-        console.log(data);
+        const data = await reponse.json();
+
+        //If no author then add unknown
+        if(data.quoteAuthor === '') {
+            author.innerText = 'Unknown'; 
+        } else {
+            author.innerText = data.quoteAuthor;
+        }
+        
+        // Reduce font size for long quotes
+        if(data.quoteText.length > 50) {
+            quoteText.classList.add('long-quote');
+        } else {
+            quoteText.classList.remove('long-quote');
+        }
+        quoteText.innerText = data.quoteText;
+
     } catch(error) {
         getQuote();
         console.log('whoops, no quote', error);
